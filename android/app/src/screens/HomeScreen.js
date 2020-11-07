@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View, FlatList} from 'react-native';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+/* import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux'; */
 import {useSelector, useDispatch} from 'react-redux';
 
 import {
@@ -10,20 +10,20 @@ import {
   clearPostsFromDatabase,
 } from '../actions/index';
 const HomeScreen = () => {
-  const posts = useSelector((states) => states.dataReducer.posts);
-  const totalPosts = useSelector((states) => states.dataReducer.totalPosts);
+  const posts = useSelector((state) => state.dataReducer.films);
+  const totalPosts = useSelector((state) => state.dataReducer.totalFilms);
   const dispatch = useDispatch();
-  const [state, setState] = useState({
+  /*  const [state, setState] = useState({
     modalVisible: true,
     submenu: [],
     orders: [],
-    /*    const mapStateToProps = (state) => {
+       const mapStateToProps = (state) => {
       return {
         posts: state.dataReducer.posts,
         totalPosts: state.dataReducer.totalPosts,
       };
-    }; */
-  });
+    };
+  }); */
 
   const renderItem = ({item}) => (
     <View
@@ -47,6 +47,7 @@ const HomeScreen = () => {
       alignItems: 'center',
     },
   });
+
   return (
     <View style={styles.main}>
       <View

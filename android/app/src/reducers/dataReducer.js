@@ -1,8 +1,8 @@
 import {DATA_LOADED, UPDATE_POSTS_COUNT} from '../constants/action-types';
 
 const initialState = {
-  posts: [],
-  totalPosts: 0,
+  films: [],
+  totalFilms: 0,
 };
 
 function dataReducer(state = initialState, action) {
@@ -10,15 +10,13 @@ function dataReducer(state = initialState, action) {
     case DATA_LOADED:
       return {
         ...state,
-        posts: action.payload,
+        films: action.payload,
       };
-    //   break;
     case UPDATE_POSTS_COUNT:
       return {
         ...state,
-        totalPosts: action.payload,
+        totalFilms: action.payload,
       };
-    //   break;
   }
   return state;
 }
@@ -30,10 +28,10 @@ export const dataAvailable = (data) => {
   };
 };
 
-export const updatePostCount = (totalPosts) => {
+export const updatePostCount = (totalFilms) => {
   return {
     type: UPDATE_POSTS_COUNT,
-    payload: totalPosts,
+    payload: totalFilms,
   };
 };
 
