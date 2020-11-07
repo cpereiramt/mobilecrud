@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/es/integration/react';
@@ -7,16 +7,14 @@ import HomeScreen from './android/app/src/screens/HomeScreen';
 
 // console.disableYellowBox = true;
 
-class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <HomeScreen />
-        </PersistGate>
-      </Provider>
-    );
-  }
-}
+const App = () => {
+  return (
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <HomeScreen />
+      </PersistGate>
+    </Provider>
+  );
+};
 
 export default App;
