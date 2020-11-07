@@ -3,7 +3,7 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/es/integration/react';
 import {store, persistor} from './android/app/src/store/index';
-import HomeScreen from './android/app/src/screens/HomeScreen';
+import HomeScreen from './android/app/src/screens/PlanetList';
 
 // console.disableYellowBox = true;
 

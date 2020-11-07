@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View, FlatList} from 'react-native';
 /* import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux'; */
@@ -7,23 +7,12 @@ import {useSelector, useDispatch} from 'react-redux';
 import {
   fetchAndStoreToDatabase,
   getDataFromDatabase,
-  clearPostsFromDatabase,
+  clearPlanetsFromDatabase,
 } from '../actions/index';
-const HomeScreen = () => {
-  const posts = useSelector((state) => state.dataReducer.films);
-  const totalPosts = useSelector((state) => state.dataReducer.totalFilms);
+const PlanetList = () => {
+  const planets = useSelector((state) => state.dataReducer.planets);
+  const totalPlanets = useSelector((state) => state.dataReducer.totalPlanets);
   const dispatch = useDispatch();
-  /*  const [state, setState] = useState({
-    modalVisible: true,
-    submenu: [],
-    orders: [],
-       const mapStateToProps = (state) => {
-      return {
-        posts: state.dataReducer.posts,
-        totalPosts: state.dataReducer.totalPosts,
-      };
-    };
-  }); */
 
   const renderItem = ({item}) => (
     <View
@@ -34,8 +23,25 @@ const HomeScreen = () => {
         elevation: 10,
         borderRadius: 5,
       }}>
-      <Text style={{fontSize: 18, color: '#16a085'}}>{item.title}</Text>
-      <Text style={{fontSize: 18, color: '#16a085'}}>{item.body}</Text>
+      <TouchableOpacity style={{backgroundColor: '#16a085', padding: 10}}>
+        <Text style={{color: 'white'}}>edit</Text>
+      </TouchableOpacity>
+      <Text style={{fontSize: 18, color: '#16a085'}}>{item.name}</Text>
+      <Text style={{fontSize: 18, color: '#16a085'}}>
+        {item.rotation_period}
+      </Text>
+      <Text style={{fontSize: 18, color: '#16a085'}}>
+        {item.orbital_period}
+      </Text>
+      <Text style={{fontSize: 18, color: '#16a085'}}>{item.diameter}</Text>
+      <Text style={{fontSize: 18, color: '#16a085'}}>{item.climate}</Text>
+      <Text style={{fontSize: 18, color: '#16a085'}}>{item.gravity}</Text>
+      <Text style={{fontSize: 18, color: '#16a085'}}>{item.terrain}</Text>
+      <Text style={{fontSize: 18, color: '#16a085'}}>{item.surface_water}</Text>
+      <Text style={{fontSize: 18, color: '#16a085'}}>{item.population}</Text>
+      <Text style={{fontSize: 18, color: '#16a085'}}>{item.created}</Text>
+      <Text style={{fontSize: 18, color: '#16a085'}}>{item.edited}</Text>
+      <Text style={{fontSize: 18, color: '#16a085'}}>{item.url}</Text>
     </View>
   );
 
@@ -58,7 +64,7 @@ const HomeScreen = () => {
           marginBottom: 8,
         }}>
         <Text style={{color: 'white'}}>
-          Total posts in database:{totalPosts}
+          Total of Planets in database:{totalPlanets}
         </Text>
       </View>
       <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
@@ -75,30 +81,19 @@ const HomeScreen = () => {
         </TouchableOpacity>
         <TouchableOpacity
           style={{backgroundColor: '#16a085', padding: 10}}
-          onPress={() => dispatch(clearPostsFromDatabase())}>
+          onPress={() => dispatch(clearPlanetsFromDatabase())}>
           <Text style={{color: 'white'}}>Clear Data</Text>
         </TouchableOpacity>
       </View>
 
       <FlatList
-        data={posts}
+        data={planets}
+        key={planets.created}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
     </View>
   );
-
-  /*   function mapDispatchToProps(dispatch) {
-    return {
-      actions: bindActionCreators(
-        {fetchAndStoreToDatabase, getDataFromDatabase, clearPostsFromDatabase},
-        dispatch,
-      ),
-    };
-  }
-}; */
-
-  /* export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen); */
 };
 
-export default HomeScreen;
+export default PlanetList;
