@@ -1,8 +1,8 @@
-import {DATA_LOADED, UPDATE_POSTS_COUNT} from '../constants/action-types';
+import {DATA_LOADED, UPDATE_PLANETS_COUNT} from '../constants/action-types';
 
 const initialState = {
-  posts: [],
-  totalPosts: 0,
+  planets: [],
+  totalPlanets: 0,
 };
 
 function dataReducer(state = initialState, action) {
@@ -10,15 +10,13 @@ function dataReducer(state = initialState, action) {
     case DATA_LOADED:
       return {
         ...state,
-        posts: action.payload,
+        planets: action.payload,
       };
-    //   break;
-    case UPDATE_POSTS_COUNT:
+    case UPDATE_PLANETS_COUNT:
       return {
         ...state,
-        totalPosts: action.payload,
+        totalPlanets: action.payload,
       };
-    //   break;
   }
   return state;
 }
@@ -30,10 +28,10 @@ export const dataAvailable = (data) => {
   };
 };
 
-export const updatePostCount = (totalPosts) => {
+export const updatePostCount = (totalPlanets) => {
   return {
-    type: UPDATE_POSTS_COUNT,
-    payload: totalPosts,
+    type: UPDATE_PLANETS_COUNT,
+    payload: totalPlanets,
   };
 };
 

@@ -1,31 +1,25 @@
-// import {
-//   ADD_ARTICLE,
-//   DATA_REQUESTED,
-//   PERFORM_LOGIN,
-//   LOGIN_SUCCESSFUL,
-// } from '../constants/action-types';
 import {dataAvailable, updatePostCount} from '../reducers/dataReducer';
 const Realm = require('realm');
-import {PostsSchema, POSTS_SCHEMA} from '../model/postsSchema';
+import {PlanetSchema, PLANET_SCHEMA} from '../model/planetSchema';
 import axios from 'axios';
 
 const databaseOptions = {
   path: 'realmT4.realm',
-  schema: [PostsSchema],
-  schemaVersion: 1,
+  schema: [PlanetSchema],
+  schemaVersion: 2,
 };
 
 export const fetchAndStoreToDatabase = () => {
   return (dispatch) => {
-    axios.get('https://jsonplaceholder.typicode.com/posts').then((response) => {
-      console.log('response ayo' + JSON.stringify(response.data));
+    axios.get('http://swapi.dev/api/planets').then((response) => {
+      // console.log('response' + JSON.stringify(response.data));
       Realm.open(databaseOptions).then((realm) => {
         realm.write(() => {
-          response.data.forEach((obj) => {
-            realm.create(POSTS_SCHEMA, obj);
+          response.data.results.forEach((obj) => {
+            realm.create(PLANET_SCHEMA, obj);
           });
-          console.log('size' + realm.objects(POSTS_SCHEMA).length);
-          dispatch(updatePostCount(realm.objects(POSTS_SCHEMA).length));
+          console.log('size' + realm.objects(PLANET_SCHEMA).length);
+          dispatch(updatePostCount(realm.objects(PLANET_SCHEMA).length));
         });
       });
     });
@@ -35,22 +29,22 @@ export const fetchAndStoreToDatabase = () => {
 export const getDataFromDatabase = () => {
   return (dispatch) => {
     Realm.open(databaseOptions).then((realm) => {
-      const res = realm.objects(POSTS_SCHEMA);
+      const res = realm.objects(PLANET_SCHEMA);
       dispatch(dataAvailable(res));
-      dispatch(updatePostCount(realm.objects(POSTS_SCHEMA).length));
+      dispatch(updatePostCount(realm.objects(PLANET_SCHEMA).length));
     });
   };
 };
 
-export const clearPostsFromDatabase = () => {
+export const clearPlanetsFromDatabase = () => {
   return (dispatch) => {
     Realm.open(databaseOptions)
       .then((realm) => {
         realm.write(() => {
-          const allPosts = realm.objects(POSTS_SCHEMA);
-          realm.delete(allPosts);
+          const allPlanets = realm.objects(PLANET_SCHEMA);
+          realm.delete(allPlanets);
           dispatch(dataAvailable([]));
-          dispatch(updatePostCount(realm.objects(POSTS_SCHEMA).length));
+          dispatch(updatePostCount(realm.objects(PLANET_SCHEMA).length));
         });
       })
       .catch((error) => {});
