@@ -9,7 +9,7 @@ import {
   getDataFromDatabase,
   clearPlanetsFromDatabase,
 } from '../actions/index';
-const PlanetList = () => {
+const PlanetList = ({navigation}) => {
   const planets = useSelector((state) => state.dataReducer.planets);
   const totalPlanets = useSelector((state) => state.dataReducer.totalPlanets);
   const dispatch = useDispatch();
@@ -23,9 +23,6 @@ const PlanetList = () => {
         elevation: 10,
         borderRadius: 5,
       }}>
-      <TouchableOpacity style={{backgroundColor: '#16a085', padding: 10}}>
-        <Text style={{color: 'white'}}>edit</Text>
-      </TouchableOpacity>
       <Text style={{fontSize: 18, color: '#16a085'}}>{item.name}</Text>
       <Text style={{fontSize: 18, color: '#16a085'}}>
         {item.rotation_period}
@@ -42,6 +39,11 @@ const PlanetList = () => {
       <Text style={{fontSize: 18, color: '#16a085'}}>{item.created}</Text>
       <Text style={{fontSize: 18, color: '#16a085'}}>{item.edited}</Text>
       <Text style={{fontSize: 18, color: '#16a085'}}>{item.url}</Text>
+      <TouchableOpacity
+        style={{backgroundColor: '#16a085', padding: 10}}
+        onPress={() => navigation.navigate('Details', item)}>
+        <Text style={{color: 'white'}}>details</Text>
+      </TouchableOpacity>
     </View>
   );
 
@@ -67,6 +69,17 @@ const PlanetList = () => {
           Total of Planets in database:{totalPlanets}
         </Text>
       </View>
+      <View
+        style={{
+          alignItems: 'center',
+          marginBottom: 10,
+        }}>
+        <TouchableOpacity
+          style={{backgroundColor: '#16a085', padding: 10, marginRight: 8}}
+          onPress={() => dispatch(fetchAndStoreToDatabase())}>
+          <Text style={{color: 'white'}}>Insert new Register</Text>
+        </TouchableOpacity>
+      </View>
       <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
         <TouchableOpacity
           style={{backgroundColor: '#16a085', padding: 10, marginRight: 8}}
@@ -82,13 +95,13 @@ const PlanetList = () => {
         <TouchableOpacity
           style={{backgroundColor: '#16a085', padding: 10}}
           onPress={() => dispatch(clearPlanetsFromDatabase())}>
-          <Text style={{color: 'white'}}>Clear Data</Text>
+          <Text style={{color: 'white'}}>Clear All Data</Text>
         </TouchableOpacity>
       </View>
 
       <FlatList
         data={planets}
-        key={planets.created}
+        key={planets.name}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
