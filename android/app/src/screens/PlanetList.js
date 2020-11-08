@@ -9,7 +9,7 @@ import {
   getDataFromDatabase,
   clearPlanetsFromDatabase,
 } from '../actions/index';
-const PlanetList = () => {
+const PlanetList = ({navigation}) => {
   const planets = useSelector((state) => state.dataReducer.planets);
   const totalPlanets = useSelector((state) => state.dataReducer.totalPlanets);
   const dispatch = useDispatch();
@@ -23,8 +23,10 @@ const PlanetList = () => {
         elevation: 10,
         borderRadius: 5,
       }}>
-      <TouchableOpacity style={{backgroundColor: '#16a085', padding: 10}}>
-        <Text style={{color: 'white'}}>edit</Text>
+      <TouchableOpacity
+        style={{backgroundColor: '#16a085', padding: 10}}
+        onPress={() => navigation.navigate('Details', item)}>
+        <Text style={{color: 'white'}}>details</Text>
       </TouchableOpacity>
       <Text style={{fontSize: 18, color: '#16a085'}}>{item.name}</Text>
       <Text style={{fontSize: 18, color: '#16a085'}}>
@@ -88,7 +90,7 @@ const PlanetList = () => {
 
       <FlatList
         data={planets}
-        key={planets.created}
+        key={planets.name}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
