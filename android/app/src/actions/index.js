@@ -1,4 +1,4 @@
-import {dataAvailable, updatePostCount} from '../reducers/dataReducer';
+import {dataAvailable, updatePlanetCount} from '../reducers/dataReducer';
 const Realm = require('realm');
 import {PlanetSchema, PLANET_SCHEMA} from '../model/planetSchema';
 import axios from 'axios';
@@ -19,7 +19,7 @@ export const fetchAndStoreToDatabase = () => {
             realm.create(PLANET_SCHEMA, obj);
           });
           console.log('size' + realm.objects(PLANET_SCHEMA).length);
-          dispatch(updatePostCount(realm.objects(PLANET_SCHEMA).length));
+          dispatch(updatePlanetCount(realm.objects(PLANET_SCHEMA).length));
         });
       });
     });
@@ -31,7 +31,7 @@ export const getDataFromDatabase = () => {
     Realm.open(databaseOptions).then((realm) => {
       const res = realm.objects(PLANET_SCHEMA);
       dispatch(dataAvailable(res));
-      dispatch(updatePostCount(realm.objects(PLANET_SCHEMA).length));
+      dispatch(updatePlanetCount(realm.objects(PLANET_SCHEMA).length));
     });
   };
 };
@@ -44,9 +44,26 @@ export const clearPlanetsFromDatabase = () => {
           const allPlanets = realm.objects(PLANET_SCHEMA);
           realm.delete(allPlanets);
           dispatch(dataAvailable([]));
-          dispatch(updatePostCount(realm.objects(PLANET_SCHEMA).length));
+          dispatch(updatePlanetCount(realm.objects(PLANET_SCHEMA).length));
         });
       })
       .catch((error) => {});
+  };
+};
+
+export const deletePlanetById = (name) => {
+  return (dispatch) => {
+    Realm.open(databaseOptions).then((realm) => {
+      realm.write(() => {
+        let allPlanets = realm.objects(PLANET_SCHEMA);
+
+        let planetsToDelete = allPlanets.filtered('name ==  "Naboo"');
+        console.log(planetsToDelete);
+        realm.delete(planetsToDelete);
+        const res = realm.objects(PLANET_SCHEMA);
+        dispatch(dataAvailable(res));
+        dispatch(updatePlanetCount(realm.objects(PLANET_SCHEMA).length));
+      });
+    });
   };
 };

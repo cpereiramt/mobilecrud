@@ -8,7 +8,7 @@ import {PersistGate} from 'redux-persist/es/integration/react';
 import {store, persistor} from './android/app/src/store/index';
 import PlanetList from './android/app/src/screens/PlanetList';
 import PlanetDetails from './android/app/src/screens/PlanetDetails';
-
+import Form from './android/app/src/screens/Form';
 // console.disableYellowBox = true;
 
 const App = () => {
@@ -20,6 +20,7 @@ const App = () => {
           <Stack.Navigator>
             <Stack.Screen name="Home" component={PlanetList} />
             <Stack.Screen name="Details" component={PlanetDetails} />
+            <Stack.Screen name="Form" component={Form} />
           </Stack.Navigator>
         </PersistGate>
       </Provider>
