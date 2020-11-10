@@ -1,7 +1,5 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View, FlatList} from 'react-native';
-/* import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux'; */
 import {useSelector, useDispatch} from 'react-redux';
 
 import {
@@ -76,7 +74,7 @@ const PlanetList = ({navigation}) => {
         }}>
         <TouchableOpacity
           style={{backgroundColor: '#16a085', padding: 10, marginRight: 8}}
-          onPress={() => dispatch(fetchAndStoreToDatabase())}>
+          onPress={() => navigation.navigate('Form', {type: 'insert'})}>
           <Text style={{color: 'white'}}>Insert new Register</Text>
         </TouchableOpacity>
       </View>

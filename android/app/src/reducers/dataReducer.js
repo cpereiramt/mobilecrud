@@ -28,7 +28,7 @@ export const dataAvailable = (data) => {
   };
 };
 
-export const updatePostCount = (totalPlanets) => {
+export const updatePlanetCount = (totalPlanets) => {
   return {
     type: UPDATE_PLANETS_COUNT,
     payload: totalPlanets,

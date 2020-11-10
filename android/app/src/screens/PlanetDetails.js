@@ -1,7 +1,11 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, FlatList} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useDispatch} from 'react-redux';
+
+import {deletePlanetById} from '../actions/index';
 
 function PlanetDetails(item) {
+  const dispatch = useDispatch();
   const {params} = item.route;
   return (
     <View
@@ -29,10 +33,13 @@ function PlanetDetails(item) {
       <Text style={{fontSize: 18, color: '#16a085'}}>{params.edited}</Text>
       <Text style={{fontSize: 18, color: '#16a085'}}>{params.url}</Text>
       <TouchableOpacity
-        style={{backgroundColor: '#16a085', padding: 10, marginBottom: 8}}>
+        style={{backgroundColor: '#16a085', padding: 10, marginBottom: 8}}
+        onPress={() => item.navigation.navigate('Form', {type: 'edit'})}>
         <Text style={{color: 'white'}}>edit</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={{backgroundColor: '#16a085', padding: 10}}>
+      <TouchableOpacity
+        style={{backgroundColor: '#16a085', padding: 10}}
+        onPress={() => dispatch(deletePlanetById(params.name))}>
         <Text style={{color: 'white'}}>delete</Text>
       </TouchableOpacity>
     </View>
